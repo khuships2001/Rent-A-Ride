@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>MainMenu</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel="stylesheet" href="css/inMain.css">
+
+    <link href="img/favicon.png" rel="icon">
+    <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,400i,600,700|Raleway:300,400,400i,500,500i,700,800,900" rel="stylesheet">
+
+    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="lib/nivo-slider/css/nivo-slider.css" rel="stylesheet">
+
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+    <link href="lib/owlcarousel/owl.carousel.css" rel="stylesheet">
+    <link href="lib/owlcarousel/owl.transitions.css" rel="stylesheet">
+    <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/venobox/venobox.css" rel="stylesheet">
+
+    <link href="css/nivo-slider-theme.css" rel="stylesheet">
+
+    <link href="css/style.css" rel="stylesheet">
+
+    <link href="css/responsive.css" rel="stylesheet">
+    <link href="css/profile.css">
+    <style type="text/css">
+        .login_btn {
+            color: black;
+            background-color: #FFC312;
+            width: 100px;
+        }
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $.ajax({
+                type: 'GET',
+                url: "main.php?f=getuserdetails&user_id=" + $.cookie("user_id"),
+                data: {
+                    get_param: 'value'
+                },
+                dataType: 'json',
+                success: function(data) {
+                    $.each(data, function(index, element) {
+                        console.log(data);
+                        $('input[name="first_name"]').val(data[0]['first_name']);
+                        $('input[name="last_name"]').val(data[0]['last_name']);
+                        $('input[name="rollno"]').val(data[0]['rollno']);
+                        $('input[name="date_of_birth"]').val(data[0]['date_of_birth']);
+                        $('input[name="email_id"]').val(data[0]['email_id']);
+                        $('textarea[name="address"]').val(data[0]['address']);
+                    });
+                }
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        $(function() {
+            $("#submit").click(function() {
+                var username = $.cookie("user_id");
+                var first_name = $('#first_name').val();
+                var last_name = $('#last_name').val();
+                var rollno = $('#rollno').val();
+                var address = $('#address').val();
+                var date_of_birth = $('#date_of_birth').val();
+                var email_id = $('#email_id').val();
+                var current = $('#current').val();
+                var newpassword = $('#newpassword').val();
+                console.log("Rohit");
+                $.ajax({
+                    type: 'GET',
+                    url: "main.php?f=updateprofile&user_id=" + username + "&first_name=" + first_name + "&last_name=" + last_name + "&rollno=" + rollno + "&address=" + address + "&date_of_birth=" + date_of_birth + "&email_id=" + email_id + "&current=" + current + "&newpassword=" + newpassword,
+                    data: {
+                        get_param: 'value'
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        console.log("Data: " + data);
+                        var success = data[0]['Success'];
+                        if (success == 1) {
+                            location.reload();
+
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <header>
+
+        <div id="sticker" class="header-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+
+                        <nav class="navbar navbar-default">
+
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".bs-example-navbar-collapse-1" aria-expanded="false">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+
+                                <a class="navbar-brand page-scroll sticky-logo" href="index.html">
+                                    <h1><span>By</span>Cycle</h1>
+
+                                </a>
+                            </div>
+
+                            <div class="collapse navbar-collapse main-menu bs-example-navbar-collapse-1" id="navbar-example">
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li>
+                                        <a class="page-scroll" href="menu.html">Home</a>
+                                    </li>
+                                    <li class="active">
+                                        <a href="profile.html">Profile</a>
+                                    </li>
+                                    <li>
+                                        <a href="index.html">Logout</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </nav>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <div class="container bootstrap snippets">
+        <div class="row">
+            <div class="col-xs-12 col-sm-9">
+                <form class="form-horizontal">
+                    <div class="panel panel-default">
+                        <div class="panel-body text-center">
+                            <img src="https://bootdey.com/img/Content/avatar/avatar6.png" class="img-circle profile-avatar" alt="User avatar">
+                        </div>
+                    </div>
+                    <p style="color: #000000" id="msg"></p>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">User info</h4>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">First Name</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="first_name" name="first_name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Last Name</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="last_name" name="last_name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Roll Number</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="rollno" name="rollno">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Contact info</h4>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Date of Birth</label>
+                                <div class="col-sm-10">
+                                    <input type="date" class="form-control" id="date_of_birth" name="date_of_birth">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">E-mail address</label>
+                                <div class="col-sm-10">
+                                    <input type="email" class="form-control" id="email_id" name="email_id">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Address</label>
+                                <div class="col-sm-10">
+                                    <textarea rows="3" class="form-control" id="address" name="address"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">Security</h4>
+                        </div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Current password</label>
+                                <div class="col-sm-10">
+                                    <input type="password" class="form-control" id="current" name="current">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">New password</label>
+                                <div class="col-sm-10">
+                                    <input type="password" class="form-control" id="newpassword" id="newpassword">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-10 col-sm-offset-2">
+                                    <input value="Update" class="btn login_btn" style="align:middle" id="submit" readonly>
+                                    <button class="btn btn-default">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

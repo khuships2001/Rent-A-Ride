@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Login Page</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <script type="text/javascript">
+        $(function() {
+            $("#submit").click(function() {
+                var username = $('#username').val();
+                var password = $('#password').val();
+                console.log(username);
+                $.ajax({
+                    type: 'GET',
+                    url: "main.php?f=login&username=" + username + "&password=" + password,
+                    data: {
+                        get_param: 'value'
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        console.log("Data: " + data);
+                        var success = data[0]['Success'];
+                        if (success == 1) {
+                        	$.cookie("user_id", username);
+                            $.cookie("lat", 22.3222);
+                            $.cookie("lon", 87.3061);
+                            window.location.replace("menu.html");
+                        } else
+                            $('#error').text("Invalid Credentials!");
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="d-flex justify-content-center h-100">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Sign In</h3>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="username" id="username" required>
+
+                        </div>
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                            </div>
+                            <input type="password" class="form-control" placeholder="password" id="password" required>
+                        </div>
+                        <div class="form-group">
+                            <input value="Login" class="btn login_btn" style="align:middle" id="submit" readonly>
+                        </div>
+                        <p style="color: #FFFFFF" id="error"></p>
+                    </form>
+
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-center links">
+                        Don't have an account?<a href="signup.html">Sign Up</a>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <a href="index.html">Go to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

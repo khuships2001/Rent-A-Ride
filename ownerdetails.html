@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  max-height: 300px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+}
+
+.title {
+  color: grey;
+  font-size: 18px;
+}
+
+input {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+a {
+  text-decoration: none;
+  font-size: 22px;
+  color: black;
+}
+
+input:hover, a:hover {
+  opacity: 0.7;
+}
+</style>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        var currurl = window.location.href;
+        var cycle_id = currurl.split("?")[1];
+        var ph=""
+        console.log(cycle_id);
+        $.ajax({
+            type: 'GET',
+            url: "main.php?f=getownerdetails&cycle_id=" + cycle_id,
+            data: {
+                get_param: 'value'
+            },
+            dataType: 'json',
+            success: function(data) {
+                console.log("Data: " + data[0]['first_name']);
+
+                    $('#name').text(data[0]['first_name']+" "+data[0]['last_name']);
+                    $('#address').text(data[0]['address']);
+
+            }
+        });
+        $.ajax({
+            type: 'GET',
+            url: "main.php?f=getphones&cycle_id=" + cycle_id,
+            data: {
+                get_param: 'value'
+            },
+            dataType: 'json',
+            success: function(data) {
+                console.log(data);
+                $.each(data, function(index, element) {
+                console.log(ph);
+                console.log("Index: "+index);
+                ph=ph + data[index]['phone_no']+" ";
+              });
+               $('#phone').text(ph);
+            }
+        });
+        console.log(ph);
+        
+    });
+</script>
+<script type="text/javascript">
+        $(function() {
+            console.log("Rohan");
+            var currurl = window.location.href;
+            var cycle_id = currurl.split("?")[1];
+            $("#get").click(function() {                
+                window.location.replace("getroute.html?"+cycle_id);
+            });
+        });
+</script>
+</head>
+<body>
+
+<h2 style="text-align:center">User Profile</h2>
+
+<div class="card">
+  <img src="img/img1.jpg" alt="John" style="width:100%">
+  <h1 id="name">John Doe</h1>
+  <p class="title" id="address">CEO & Founder, Example</p>
+  <p id="phone">Harvard University</p>
+  <p><input id="get" value="Get Directions" readonly></p>
+</div>
+</body>
+</html> 

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var currurl = window.location.href;
+        var cycle_id = currurl.split("?")[1];
+        console.log(cycle_id);
+        $.ajax({
+            type: 'GET',
+            url: "main.php?f=getcycledetails&cycle_id=" + cycle_id,
+            data: {
+                get_param: 'value'
+            },
+            dataType: 'json',
+            success: function(data) {
+                console.log("Data: " + data);
+                $.each(data, function(index, element) {
+                    console.log(data);
+                    $('input[name="color"]').val(data[0]['color']);
+                    $('input[name="model"]').val(data[0]['model']);
+                    if (data[0]['iscarrier'] == "1")
+                        $('input[name="carrier"]').val("Yes");
+                    else
+                        $('input[name="carrier"]').val("No");
+                });
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+        $(function() {
+            var currurl = window.location.href;
+            var cycle_id = currurl.split("?")[1];
+            $("#submit").click(function() {                
+                window.location.replace("ownerdetails.html?"+cycle_id);
+            });
+        });
+</script>
+<head>
+    <link href="css/details.css" rel="stylesheet">
+
+    <body background="img/slider/pic3.jpg">
+        <div class="container">
+            <form action="/action_page.php">
+                <h1>Details</h1>
+                <label for="email"><i class="fa fa-envelope"></i> Color</label>
+                <input type="text" id="email" name="color" readonly>
+                <label for="adr"><i class="fa fa-address-card-o"></i> Model</label>
+                <input type="text" id="addr" name="model" readonly>
+                <label for="city"><i class="fa fa-institution"></i> Carrier</label>
+                <input type="text" id="city" name="carrier" readonly>
+                <input id="submit" value="Continue to checkout" class="btn">
+            </form>
+        </div>
+    </body>
+
+</html>

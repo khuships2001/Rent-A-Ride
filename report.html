@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Report Query</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/mystyle.css">
+  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+<script type="text/javascript">
+        $(function() {
+            $("#submit").click(function() {
+                var subject = $('#subject').val();
+                var description = $('#description').val();
+                console.log($.cookie("user_id") + subject+description)
+                // console.log(username+password);
+
+                $.ajax({
+                    type: 'GET',
+                    url: "main.php?f=filecomplaint&user_id=" + $.cookie("user_id") + "&subject=" + subject+"&desc="+description,
+                    data: {
+                        get_param: 'value'
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        $('#msg').text("Complaint filed Successfully!");
+                    }
+                });
+            });
+            $("#back").click(function() {
+                window.location.replace("menu.html");
+            });
+        });
+    </script>
+</head>
+<body>
+
+<div class="container">
+    <div class="center">
+  <h2>Report your query to admin</h2>
+  <form>
+    <div class="form-group col-md-6">
+      <label for="uname">Subject</label>
+      <input type="text" class="form-control" placeholder="Enter Subject" id="subject" required>
+    </div>
+    <div class="form-group col-md-6">
+      <label for="pwd">Description</label>
+      <textarea type="text" class="form-control" rows="5" placeholder="Enter Description" id="description" required></textarea>
+    </div>
+    <div >
+      <p id="msg"></p>
+    <input type="button" class="btn btn-primary" id=submit value="submit">
+    <input type="button" class="btn btn-primary" id=back value="Back" style="margin-left: 20px;">
+</div>
+  </form>
+
+</div>
+<!-- </div> -->
+</body>
+</html>
